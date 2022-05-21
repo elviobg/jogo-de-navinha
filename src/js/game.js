@@ -52,6 +52,7 @@ function start() {
   $("#start").hide();
   setInterval(loop, 30);
   game.gameover = false;
+  $("#main-play-area").append("<div id='score'></div>");
 }
 
 function loop() {
@@ -65,6 +66,7 @@ function loop() {
   createEnemy();
   moveEnemies();
   checkCollisions();
+  updateScore();
 }
 
 function updateScenary() {
@@ -163,6 +165,7 @@ function checkCollisions() {
     $("#fire").collision($(this))
     const collision = $("#fire").collision($(this));
     if(collision.length > 0) {
+      game.score += CONFIG.ENEMY.SCORE;
       $(".explosion").remove();
       $(this).removeClass( "alien alien-transition");
       $(this).addClass( "explosion" );
@@ -175,4 +178,12 @@ function checkCollisions() {
         }
     }
   });
+}
+
+function updateScore() {
+  $("#score").html(
+    "<h2> Pontos: " +
+      game.score +
+      "</h2>"
+  );
 }
