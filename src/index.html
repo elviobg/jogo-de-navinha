@@ -6,22 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/game.css" rel="stylesheet" type="text/css" />
-    <title>Choplifter</title>
+    <title>Space Attack!!</title>
   </head>
   <body>
-    <div id="container">
-      <div id="background">
-        <div id="start" onclick="start()">
-          <h1>Choplifter - Resgate!</h1>
-          <p>
-            Utilize a tecla W para movimentar o helicóptero para cima, a tecla S
-            para baixo e a tecla SPACE para atirar.
-          </p>
-          <p>Clique aqui para iniciar!!</p>
-        </div>
+    <div id="main-play-area">
+      <img id="player" src="./assets/imgs/player.png" alt="hero">
+      <div id="start" class="start-button" onclick="start()">
+        <h1>Alien Attack!!</h1>
+        <p>
+          Utilize a tecla W para movimentar a nave para cima, a tecla S
+          para baixo e a tecla SPACE para atirar.
+        </p>
+        <p>Clique aqui para iniciar!!</p>
       </div>
-    </div>
-
+  </div>
     <audio
       src="assets/sounds/background.mp3"
       preload="auto"
