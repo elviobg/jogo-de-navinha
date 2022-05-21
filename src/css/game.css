@@ -21,3 +21,14 @@
   position: absolute;
   background-image: url(../assets/imgs/fire.png);
 }
+
+.alien {
+  height: 60px;
+  width: 70px;
+  position: relative;
+}
+
+.alien-transition {
+  opacity: 1;
+  transition: opacity 1.5s ease-in-out;
+}

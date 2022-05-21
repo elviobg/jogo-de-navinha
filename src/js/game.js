@@ -1,10 +1,11 @@
 const game = {
-  time: setInterval(loop, 30),
+  time: null,
   actions: [],
   canFire: true,
+  canCreateEnemy: true,
   fireSpeed: null,
   score: 0,
-  energy: 3,
+  gameover: false,
 };
 
 const INPUTS = {
@@ -49,16 +50,20 @@ musicBackground.addEventListener(
 
 function start() {
   $("#start").hide();
+  setInterval(loop, 30);
+  game.gameover = false;
 }
 
 function loop() {
-  if (game.energy == 0) {
+  if (game.gameover) {
     return;
   }
   updateScenary();
   fireLaser();
   movePLayer();
   moveLaser();
+  createEnemy();
+  moveEnemies();
 }
 
 function updateScenary() {
@@ -115,4 +120,38 @@ function moveLaser() {
   } else {
     $(".fire").css("left", firePosition + 10);
   }
+}
+
+function createEnemy() {
+  if(!game.canCreateEnemy){
+    return;
+  }
+  game.canCreateEnemy = false;
+  let newAlien = document.createElement('img');
+  const aliensImg = ['./assets/imgs/monster-1.png', './assets/imgs/monster-2.png', './assets/imgs/monster-3.png'];
+  let alienSprite = aliensImg[Math.floor(Math.random() * aliensImg.length)];
+  const yPosition = parseInt(Math.random() * CONFIG.ENEMY.BOTTOM);
+  newAlien.src = alienSprite;
+  newAlien.classList.add('alien');
+  newAlien.classList.add('alien-transition');
+  newAlien.style.left = '800px';
+  newAlien.style.top = `${yPosition}px`;
+  $("#main-play-area").append(newAlien);
+
+  let expireTime = window.setInterval(createNewEnemy, 5000);
+  function createNewEnemy() {
+    game.canCreateEnemy = true;
+    window.clearInterval(expireTime);
+    expireTime = false;
+  }
+}
+
+function moveEnemies() {
+  $(".alien").each(function () {
+    const xPosition = parseInt(this.style.left) - 5;
+    this.style.left = `${xPosition}px`;
+    if(xPosition <= 0){
+      game.gameover = true;
+    }
+  });
 }
