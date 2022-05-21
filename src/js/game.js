@@ -63,10 +63,10 @@ function loop() {
   fireLaser();
   movePLayer();
   moveLaser();
-  createEnemy();
-  moveEnemies();
   checkCollisions();
+  moveEnemies();
   updateScore();
+  createEnemy();
 }
 
 function updateScenary() {
@@ -170,12 +170,6 @@ function checkCollisions() {
       $(this).removeClass( "alien alien-transition");
       $(this).addClass( "explosion" );
       $(this).attr("src", "./assets/imgs/explosion.png");
-      let expireExplosion = window.setInterval(removeExplosion, 2000);
-        function removeExplosion() {
-          $(this).parentNode.removeChild( this );
-          window.clearInterval(expireExplosion);
-          expireExplosion = false;
-        }
     }
   });
 }
