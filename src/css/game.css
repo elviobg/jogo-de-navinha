@@ -7,11 +7,17 @@
   top: 250px
 }
 
-
 .enemy {
   position: relative;
   height: 60px;
   width: 70px;
   right: 20px;
   top: 250px
+}
+
+.fire {
+  width: 50px;
+  height: 8px;
+  position: absolute;
+  background-image: url(../assets/imgs/fire.png);
 }

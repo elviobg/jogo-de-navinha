@@ -45,7 +45,7 @@ musicBackground.addEventListener(
   },
   false
 );
-musicBackground.play();
+//musicBackground.play();
 
 function start() {
   $("#start").hide();
@@ -56,7 +56,9 @@ function loop() {
     return;
   }
   updateScenary();
+  fireLaser();
   movePLayer();
+  moveLaser();
 }
 
 function updateScenary() {
@@ -81,5 +83,36 @@ function movePLayer() {
     playerPositionTop <= CONFIG.PLAYER.BOTTOM
   ) {
     $("#player").css("top", playerPositionTop + CONFIG.PLAYER.SPEED);
+  }
+}
+
+//funcionalidade de tiro
+function fireLaser() {
+  if (game.actions[INPUTS.fire] && game.canFire) {
+    game.canFire = false;
+    const xPosition = parseInt($("#player").css("left"))
+    const yPosition = parseInt($("#player").css("top"))
+    let laser = createLaserElement(xPosition, yPosition+20);
+    $("#main-play-area").append(laser);
+    CONFIG.SOUNDS.SHOOT.play();
+  }
+}
+
+function createLaserElement(xPosition, yPosition) {
+  let newLaser = document.createElement('img');
+  newLaser.src = './assets/imgs/fire.png';
+  newLaser.classList.add('fire');
+  newLaser.style.left = `${xPosition}px`;
+  newLaser.style.top = `${yPosition}px`;
+  return newLaser;
+}
+
+function moveLaser() {
+  const firePosition = parseInt($(".fire").css("left"));
+  if(firePosition >= 900) {
+    $(".fire").remove();
+    game.canFire = true;
+  } else {
+    $(".fire").css("left", firePosition + 10);
   }
 }
