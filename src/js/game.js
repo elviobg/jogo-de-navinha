@@ -64,6 +64,7 @@ function loop() {
   moveLaser();
   createEnemy();
   moveEnemies();
+  checkCollisions();
 }
 
 function updateScenary() {
@@ -107,18 +108,19 @@ function createLaserElement(xPosition, yPosition) {
   let newLaser = document.createElement('img');
   newLaser.src = './assets/imgs/fire.png';
   newLaser.classList.add('fire');
+  newLaser.id = 'fire';
   newLaser.style.left = `${xPosition}px`;
   newLaser.style.top = `${yPosition}px`;
   return newLaser;
 }
 
 function moveLaser() {
-  const firePosition = parseInt($(".fire").css("left"));
+  const firePosition = parseInt($("#fire").css("left"));
   if(firePosition >= 900) {
-    $(".fire").remove();
+    $("#fire").remove();
     game.canFire = true;
   } else {
-    $(".fire").css("left", firePosition + 10);
+    $("#fire").css("left", firePosition + 10);
   }
 }
 
@@ -147,11 +149,30 @@ function createEnemy() {
 }
 
 function moveEnemies() {
-  $(".alien").each(function () {
+  $(".alien").not(".explosion").each(function () {
     const xPosition = parseInt(this.style.left) - 5;
     this.style.left = `${xPosition}px`;
     if(xPosition <= 0){
       game.gameover = true;
+    }
+  });
+}
+
+function checkCollisions() {
+  $(".alien").each(function () {
+    $("#fire").collision($(this))
+    const collision = $("#fire").collision($(this));
+    if(collision.length > 0) {
+      $(".explosion").remove();
+      $(this).removeClass( "alien alien-transition");
+      $(this).addClass( "explosion" );
+      $(this).attr("src", "./assets/imgs/explosion.png");
+      let expireExplosion = window.setInterval(removeExplosion, 2000);
+        function removeExplosion() {
+          $(this).parentNode.removeChild( this );
+          window.clearInterval(expireExplosion);
+          expireExplosion = false;
+        }
     }
   });
 }

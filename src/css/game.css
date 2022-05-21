@@ -32,3 +32,14 @@
   opacity: 1;
   transition: opacity 1.5s ease-in-out;
 }
+
+.explosion {
+  height: 60px;
+  width: 70px;
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+  background-image: url(../assets/imgs/explosion.png);
+}
+
